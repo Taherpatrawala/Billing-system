@@ -5,7 +5,7 @@ import Jwt from "jsonwebtoken";
 import User from "../models/user.js";
 
 const authController = {};
-authController.signup = async (req, res, next) => {
+authController.signup = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.json({
@@ -47,7 +47,7 @@ authController.signup = async (req, res, next) => {
   });
 };
 
-authController.login = async (req, res, next) => {
+authController.login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
