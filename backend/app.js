@@ -1,10 +1,15 @@
-const express = require("express");
+import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
+import authRoutes from "./routes/authRoute.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+dotenv.config();
+
+app.use("/auth", authRoutes);
 
 mongoose
   .connect("mongodb://localhost:27017/Isprava-billing")
