@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { uid } from "uid";
+import toast, { Toaster } from "react-hot-toast";
 import InvoiceItem from "./InvoiceItem";
 import InvoiceModal from "./InvoiceModal";
 import incrementString from "../helpers/incrementString";
+import { createInvoice } from "../helpers/createInvoice";
 const date = new Date();
 const today = date.toLocaleDateString("en-GB", {
   month: "numeric",
@@ -13,7 +15,7 @@ const today = date.toLocaleDateString("en-GB", {
 const InvoiceForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [discount, setDiscount] = useState("");
-  const [tax, setTax] = useState("");
+  const [tax, setTax] = useState("18");
   const [invoiceNumber, setInvoiceNumber] = useState(1);
   const [issueDate, setIssueDate] = useState(today);
   const [customerName, setCustomerName] = useState("");
@@ -21,7 +23,7 @@ const InvoiceForm = () => {
     {
       id: uid(6),
       name: "",
-      qty: 1,
+      quantity: 1,
       price: "1.00",
     },
   ]);
@@ -37,7 +39,7 @@ const InvoiceForm = () => {
       {
         id: uid(6),
         name: "",
-        qty: 1,
+        quantity: 1,
         price: "1.00",
       },
     ]);
@@ -50,7 +52,7 @@ const InvoiceForm = () => {
       {
         id: id,
         name: "",
-        qty: 1,
+        quantity: 1,
         price: "1.00",
       },
     ]);
@@ -81,12 +83,32 @@ const InvoiceForm = () => {
 
   const subtotal = items.reduce((prev, curr) => {
     if (curr.name.trim().length > 0)
-      return prev + Number(curr.price * Math.floor(curr.qty));
+      return prev + Number(curr.price * Math.floor(curr.quantity));
     else return prev;
   }, 0);
   const taxRate = (tax * subtotal) / 100;
   const discountRate = (discount * subtotal) / 100;
   const total = subtotal - discountRate + taxRate;
+
+  const invoice = {
+    invoiceNumber: invoiceNumber,
+    invoiceDate: issueDate,
+    customerName: customerName,
+    items: items,
+    subtotal: subtotal,
+    gst: taxRate,
+    discount: discountRate,
+    grandTotal: total,
+  };
+
+  const handleSave = async () => {
+    const newInvoice = await createInvoice(invoice).then((res) => {
+      toast.success(res.message);
+      setIsOpen(false);
+      addNextInvoiceHandler();
+    });
+    console.log(newInvoice);
+  };
 
   return (
     <form
@@ -168,7 +190,7 @@ const InvoiceForm = () => {
                 key={item.id}
                 id={item.id}
                 name={item.name}
-                qty={item.qty}
+                quantity={item.quantity}
                 price={item.price}
                 onDeleteItem={deleteItemHandler}
                 onEdtiItem={edtiItemHandler}
@@ -278,7 +300,11 @@ const InvoiceForm = () => {
               </div>
             </div>
           </div>
+          <button onClick={handleSave} className="border">
+            Save
+          </button>
         </div>
+        <Toaster />
       </div>
     </form>
   );

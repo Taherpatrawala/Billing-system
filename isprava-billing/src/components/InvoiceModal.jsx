@@ -146,13 +146,13 @@ const InvoiceModal = ({
                         <tr key={item.id}>
                           <td className="w-full">{item.name}</td>
                           <td className="min-w-[50px] text-center">
-                            {item.qty}
+                            {item.quantity}
                           </td>
                           <td className="min-w-[80px] text-right">
                             ${Number(item.price).toFixed(2)}
                           </td>
                           <td className="min-w-[90px] text-right">
-                            ${Number(item.price * item.qty).toFixed(2)}
+                            ${Number(item.price * item.quantity).toFixed(2)}
                           </td>
                         </tr>
                       ))}

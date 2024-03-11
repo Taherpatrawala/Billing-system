@@ -1,6 +1,13 @@
 import InvoiceField from "./InvoiceField";
 
-const InvoiceItem = ({ id, name, qty, price, onDeleteItem, onEdtiItem }) => {
+const InvoiceItem = ({
+  id,
+  name,
+  quantity,
+  price,
+  onDeleteItem,
+  onEdtiItem,
+}) => {
   const deleteItemHandler = () => {
     onDeleteItem(id);
   };
@@ -25,9 +32,9 @@ const InvoiceItem = ({ id, name, qty, price, onDeleteItem, onEdtiItem }) => {
           cellData={{
             type: "number",
             min: "1",
-            name: "qty",
+            name: "quantity",
             id: id,
-            value: qty,
+            value: quantity,
           }}
         />
       </td>
@@ -59,7 +66,7 @@ const InvoiceItem = ({ id, name, qty, price, onDeleteItem, onEdtiItem }) => {
           }}
         />
       </td>
-      <td className="relative min-w-[80px]">{price * qty}</td>
+      <td className="relative min-w-[80px]">{price * quantity}</td>
       <td className="flex items-center justify-center">
         <button
           className="rounded-md bg-red-500 p-2 text-white shadow-sm transition-colors duration-200 hover:bg-red-600"
