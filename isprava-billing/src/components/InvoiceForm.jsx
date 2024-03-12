@@ -102,11 +102,15 @@ const InvoiceForm = () => {
   };
 
   const handleSave = async () => {
-    const newInvoice = await createInvoice(invoice).then((res) => {
-      toast.success(res.message);
-      setIsOpen(false);
-      addNextInvoiceHandler();
-    });
+    const newInvoice = await createInvoice(invoice)
+      .then((res) => {
+        toast.success(res.message);
+        setIsOpen(true);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        toast.error(err.message);
+      });
     console.log(newInvoice);
   };
 
@@ -300,7 +304,7 @@ const InvoiceForm = () => {
               </div>
             </div>
           </div>
-          <button onClick={handleSave} className="border">
+          <button onClick={handleSave} className="border" type="submit">
             Save
           </button>
         </div>

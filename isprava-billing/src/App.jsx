@@ -1,10 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./components/Navbar/Navbar";
 import InvoiceForm from "./components/InvoiceForm";
 import Login from "./components/authComponents/login";
 
 function App() {
   return (
     <BrowserRouter>
+      <NavBar />
       <Routes>
         <Route
           path="/"
@@ -18,6 +20,7 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Login />} />
+        <Route path="/new-invoice" element={<InvoiceForm />} />
       </Routes>
     </BrowserRouter>
   );
