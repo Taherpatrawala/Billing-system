@@ -5,6 +5,17 @@ import InvoiceItem from "./InvoiceItem";
 import InvoiceModal from "./InvoiceModal";
 import incrementString from "../helpers/incrementString";
 import { createInvoice } from "../helpers/createInvoice";
+import {
+  setDiscount,
+  setTax,
+  setInvoiceNumber,
+  setIssueDate,
+  setCustomerName,
+  setSliceItems,
+  addItem,
+} from "../slices/invoiceSlice";
+import { useSelector, useDispatch } from "react-redux";
+
 const date = new Date();
 const today = date.toLocaleDateString("en-GB", {
   month: "numeric",
@@ -14,52 +25,50 @@ const today = date.toLocaleDateString("en-GB", {
 
 const InvoiceForm = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [discount, setDiscount] = useState("");
-  const [tax, setTax] = useState("18");
-  const [invoiceNumber, setInvoiceNumber] = useState(1);
-  const [issueDate, setIssueDate] = useState(today);
-  const [customerName, setCustomerName] = useState("");
-  const [items, setItems] = useState([
-    {
-      id: uid(6),
-      name: "",
-      quantity: 1,
-      price: "1.00",
-    },
-  ]);
 
+  const discount = useSelector((state) => state.invoiceSlice.discount);
+  const tax = useSelector((state) => state.invoiceSlice.gst);
+  const invoiceNumber = useSelector(
+    (state) => state.invoiceSlice.invoiceNumber
+  );
+  const issueDate = useSelector((state) => state.invoiceSlice.issueDate);
+  const customerName = useSelector((state) => state.invoiceSlice.customerName);
+  const items = useSelector((state) => state.invoiceSlice.items);
+
+  const dispatch = useDispatch();
   const reviewInvoiceHandler = (event) => {
     event.preventDefault();
     setIsOpen(true);
   };
 
   const addNextInvoiceHandler = () => {
-    setInvoiceNumber((prevNumber) => incrementString(prevNumber));
-    setItems([
-      {
+    dispatch(setInvoiceNumber((prevNumber) => incrementString(prevNumber)));
+
+    dispatch(
+      addItem({
         id: uid(6),
         name: "",
         quantity: 1,
         price: "1.00",
-      },
-    ]);
+      })
+    );
   };
 
   const addItemHandler = () => {
     const id = uid(6);
-    setItems((prevItem) => [
-      ...prevItem,
-      {
+
+    dispatch(
+      addItem({
         id: id,
         name: "",
         quantity: 1,
         price: "1.00",
-      },
-    ]);
+      })
+    );
   };
 
   const deleteItemHandler = (id) => {
-    setItems((prevItem) => prevItem.filter((item) => item.id !== id));
+    dispatch(setSliceItems(items.filter((item) => item.id !== id)));
   };
 
   const edtiItemHandler = (event) => {
@@ -69,16 +78,14 @@ const InvoiceForm = () => {
       value: event.target.value,
     };
 
-    const newItems = items.map((items) => {
-      for (const key in items) {
-        if (key === editedItem.name && items.id === editedItem.id) {
-          items[key] = editedItem.value;
-        }
+    const newItems = items.map((item) => {
+      if (item.id === editedItem.id) {
+        return { ...item, [editedItem.name]: editedItem.value };
       }
-      return items;
+      return item;
     });
 
-    setItems(newItems);
+    dispatch(setSliceItems(newItems));
   };
 
   const subtotal = items.reduce((prev, curr) => {
@@ -138,7 +145,9 @@ const InvoiceForm = () => {
               min="1"
               step="1"
               value={invoiceNumber}
-              onChange={(event) => setInvoiceNumber(event.target.value)}
+              onChange={(event) =>
+                dispatch(setInvoiceNumber(event.target.value))
+              }
             />
           </div>
         </div>
@@ -159,7 +168,9 @@ const InvoiceForm = () => {
               name="customerName"
               id="customerName"
               value={customerName}
-              onChange={(event) => setCustomerName(event.target.value)}
+              onChange={(event) =>
+                dispatch(setCustomerName(event.target.value))
+              }
             />
           </div>
           <div className="m-3">
@@ -174,7 +185,7 @@ const InvoiceForm = () => {
               name="date"
               id=""
               value={issueDate}
-              onChange={(e) => setIssueDate(e.target.value)}
+              onChange={(e) => dispatch(setIssueDate(e.target.value))}
             />
           </div>
         </div>
@@ -272,7 +283,9 @@ const InvoiceForm = () => {
                   step="0.01"
                   placeholder="0.0"
                   value={tax}
-                  onChange={(event) => setTax(event.target.value)}
+                  onChange={(event) =>
+                    dispatch(setTax(parseInt(event.target.value)))
+                  }
                 />
                 <span className="rounded-r-md bg-gray-200 py-2 px-4 text-gray-500 shadow-sm">
                   %
@@ -296,7 +309,9 @@ const InvoiceForm = () => {
                   step="0.01"
                   placeholder="0.0"
                   value={discount}
-                  onChange={(event) => setDiscount(event.target.value)}
+                  onChange={(event) =>
+                    dispatch(setDiscount(event.target.value))
+                  }
                 />
                 <span className="rounded-r-md bg-gray-200 py-2 px-4 text-gray-500 shadow-sm">
                   %
