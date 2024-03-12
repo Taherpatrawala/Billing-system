@@ -3,8 +3,8 @@ import { uid } from "uid";
 import toast, { Toaster } from "react-hot-toast";
 import InvoiceItem from "./InvoiceItem";
 import InvoiceModal from "./InvoiceModal";
-import incrementString from "../helpers/incrementString";
-import { createInvoice } from "../helpers/createInvoice";
+import incrementString from "../../../helpers/incrementString";
+import { createInvoice } from "../../../helpers/createInvoice";
 import {
   setDiscount,
   setTax,
@@ -13,7 +13,7 @@ import {
   setCustomerName,
   setSliceItems,
   addItem,
-} from "../slices/invoiceSlice";
+} from "../../../slices/invoiceSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const date = new Date();

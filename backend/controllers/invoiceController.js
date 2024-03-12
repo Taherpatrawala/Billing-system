@@ -21,4 +21,15 @@ invoiceController.createInvoice = async (req, res) => {
     });
 };
 
+invoiceController.getAllInvoice = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.user.email });
+    const invoiceList = await Invoice.find({ user: user._id }).lean().exec();
+
+    res.send(invoiceList);
+  } catch {
+    res.status(404).json({ message: "User not found or InvoiceList is empty" });
+  }
+};
+
 export default invoiceController;

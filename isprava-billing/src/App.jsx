@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/Navbar/Navbar";
-import InvoiceForm from "./components/InvoiceForm";
+import InvoiceForm from "./components/invoice/invoiceComponents/InvoiceForm";
 import Login from "./components/authComponents/login";
 
 function App() {
