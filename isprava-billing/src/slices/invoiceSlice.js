@@ -1,13 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { uid } from "uid";
 
-const date = new Date();
-const today = date.toLocaleDateString("en-GB", {
-  month: "numeric",
-  day: "numeric",
-  year: "numeric",
-});
-
 const invoiceSlice = createSlice({
   name: "invoice",
   initialState: {
@@ -28,6 +21,12 @@ const invoiceSlice = createSlice({
     grandTotal: 1,
   },
   reducers: {
+    setAllProperties: (state, action) => {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
     setDiscount: (state, action) => {
       state.discount = action.payload;
     },

@@ -26,7 +26,7 @@ const NavBar = () => {
                 <NavLink to="/invoice" className="text-white">
                   Create
                 </NavLink>
-                <div className="z-10 absolute hidden group-hover:flex flex-col min-w-max p-2 bg-white mt-2 border-2 shadow-md -translate-y-3 space-y-2 text-gray-800 rounded-md ">
+                <div className="z-30 absolute hidden group-hover:flex flex-col min-w-max p-2 bg-white mt-2 border-2 shadow-md -translate-y-3 space-y-2 text-gray-800 rounded-md ">
                   <NavLink
                     className=" hover:bg-gray-200 rounded-md"
                     to="/new-invoice"

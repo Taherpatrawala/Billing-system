@@ -7,6 +7,7 @@ const InvoiceSchema = new mongoose.Schema({
   },
   invoiceNumber: {
     type: String,
+    unique: true,
     required: true,
   },
   invoiceDate: {
