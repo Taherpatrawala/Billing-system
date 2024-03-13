@@ -6,13 +6,9 @@ const invoiceController = {};
 
 invoiceController.createInvoice = async (req, res) => {
   const data = req.body;
-  const user = await User.findOne({ email: req.user.email });
-
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  await Invoice.create({ ...data, user: user._id })
+  console.log(req.user.id);
+  console.log(req.user, "user");
+  await Invoice.create({ ...data, user: req.user.id })
     .then(() => {
       res.json({ message: "Invoice created successfully" });
     })
@@ -23,8 +19,7 @@ invoiceController.createInvoice = async (req, res) => {
 
 invoiceController.getAllInvoice = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.user.email });
-    const invoiceList = await Invoice.find({ user: user._id }).lean().exec();
+    const invoiceList = await Invoice.find({ user: req.user.id }).lean().exec();
 
     res.send(invoiceList);
   } catch {
@@ -32,4 +27,12 @@ invoiceController.getAllInvoice = async (req, res) => {
   }
 };
 
+invoiceController.getInvoicesCount = async (req, res) => {
+  const userId = req.user.id;
+  if (!mongoose.isValidObjectId(userId)) {
+    return res.status(400).json({ message: "Invalid User Id" });
+  }
+  const invoiceCount = await Invoice.countDocuments({ user: userId });
+  res.json(invoiceCount);
+};
 export default invoiceController;

@@ -14,7 +14,7 @@ const invoiceSlice = createSlice({
     discount: "",
     gst: 18,
     invoiceNumber: 1,
-    issueDate: today,
+    issueDate: "",
     customerName: "",
     subTotal: 1,
     items: [

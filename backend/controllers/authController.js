@@ -35,7 +35,10 @@ authController.signup = async (req, res) => {
     password: hashedPass,
   });
 
-  const token = Jwt.sign({ email: newUser.email }, process.env.JWT_SECRET);
+  const UserId = await User.findOne({ email });
+  console.log(UserId._id, "userId");
+
+  const token = Jwt.sign({ id: UserId._id }, process.env.JWT_SECRET);
 
   res.json({
     errors: [],
@@ -73,7 +76,8 @@ authController.login = async (req, res) => {
     });
   }
 
-  const token = Jwt.sign({ email: user.email }, process.env.JWT_SECRET);
+  const UserId = await User.findOne({ email });
+  const token = Jwt.sign({ id: UserId._id }, process.env.JWT_SECRET);
 
   res.json({
     errors: [],

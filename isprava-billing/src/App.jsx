@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/Navbar/Navbar";
 import InvoiceForm from "./components/invoice/invoiceComponents/InvoiceForm";
 import Login from "./components/authComponents/login";
+import SearchInvoices from "./components/invoice/SearchInvoices";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Login />} />
         <Route path="/new-invoice" element={<InvoiceForm />} />
+        <Route path="/invoice/:id" element={<InvoiceForm />} />
+        <Route path="/invoices" element={<SearchInvoices />} />
       </Routes>
     </BrowserRouter>
   );

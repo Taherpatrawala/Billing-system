@@ -6,5 +6,10 @@ const invoiceRoute = express.Router();
 
 invoiceRoute.post("/createInvoice", authorize, invoiceController.createInvoice);
 invoiceRoute.get("/getAllInvoice", authorize, invoiceController.getAllInvoice);
+invoiceRoute.get(
+  "/getInvoicesCount",
+  authorize,
+  invoiceController.getInvoicesCount
+);
 
 export default invoiceRoute;

@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { uid } from "uid";
 import toast, { Toaster } from "react-hot-toast";
 import InvoiceItem from "./InvoiceItem";
 import InvoiceModal from "./InvoiceModal";
-import incrementString from "../../../helpers/incrementString";
 import { createInvoice } from "../../../helpers/createInvoice";
+import { useParams } from "react-router";
 import {
   setDiscount,
   setTax,
@@ -15,6 +15,7 @@ import {
   addItem,
 } from "../../../slices/invoiceSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { getInvoiceNumber } from "../../../helpers/getInvoiceNumber";
 
 const date = new Date();
 const today = date.toLocaleDateString("en-GB", {
@@ -41,8 +42,9 @@ const InvoiceForm = () => {
     setIsOpen(true);
   };
 
-  const addNextInvoiceHandler = () => {
-    dispatch(setInvoiceNumber((prevNumber) => incrementString(prevNumber)));
+  const addNextInvoiceHandler = async () => {
+    const InvoiceNumber = await getInvoiceNumber();
+    dispatch(setInvoiceNumber(InvoiceNumber + 1));
 
     dispatch(
       addItem({
@@ -121,6 +123,14 @@ const InvoiceForm = () => {
     console.log(newInvoice);
   };
 
+  useEffect(() => {
+    const fetchInvoice = async () => {
+      const InvoiceNumber = await getInvoiceNumber();
+      dispatch(setInvoiceNumber(InvoiceNumber + 1));
+    };
+    fetchInvoice();
+  }, []);
+
   return (
     <form
       className="relative flex flex-col px-2 md:flex-row"
@@ -143,11 +153,8 @@ const InvoiceForm = () => {
               name="invoiceNumber"
               id="invoiceNumber"
               min="1"
-              step="1"
               value={invoiceNumber}
-              onChange={(event) =>
-                dispatch(setInvoiceNumber(event.target.value))
-              }
+              readOnly
             />
           </div>
         </div>
@@ -183,6 +190,7 @@ const InvoiceForm = () => {
             <input
               type="date"
               name="date"
+              required
               id=""
               value={issueDate}
               onChange={(e) => dispatch(setIssueDate(e.target.value))}
