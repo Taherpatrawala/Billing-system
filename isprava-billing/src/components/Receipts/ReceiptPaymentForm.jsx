@@ -1,23 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import {
+  setFormNumber,
+  setClientName,
+  setDate,
+  setParticulars,
+  setAmount,
+} from "../../slices/ReceiptPaymentSlice";
 import ReceiptModal from "./ReceiptModal";
 
 const ReceiptPaymentForm = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [clientName, setClientName] = useState("");
-  const [date, setDate] = useState("");
-  const [particulars, setParticulars] = useState("");
-
-  const [amount, setAmount] = useState("");
+  const dispatch = useDispatch();
+  const formNumber = useSelector((state) => state.receiptPayment.formNumber);
+  const clientName = useSelector((state) => state.receiptPayment.clientName);
+  const date = useSelector((state) => state.receiptPayment.date);
+  const particulars = useSelector((state) => state.receiptPayment.particulars);
+  const amount = useSelector((state) => state.receiptPayment.amount);
 
   const location = useLocation();
   const type = location.pathname.split("/")[1];
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    setIsOpen(true);
+  const formData = {
+    formNumber: formNumber,
+    customerName: clientName,
+    issueDate: date,
+    particulars: particulars,
+    amount: amount,
   };
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const formNum = Math.floor(Math.random() * 1000);
+    dispatch(setFormNumber(`#FN${formNum}`));
+    console.log(formData);
+    await axios
+      .post("http://localhost:8000/payment/create-payment", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setIsOpen(true);
+      });
+    console.log(formData);
+  };
+  useEffect(() => {
+    dispatch(setFormNumber(`#FN${Math.floor(Math.random() * 1000)}`));
+  }, []);
   return (
     <div className="">
       <form
@@ -42,7 +75,7 @@ const ReceiptPaymentForm = () => {
             type="text"
             placeholder="Client Name"
             value={clientName}
-            onChange={(e) => setClientName(e.target.value)}
+            onChange={(e) => dispatch(setClientName(e.target.value))}
             required
           />
         </div>
@@ -59,7 +92,7 @@ const ReceiptPaymentForm = () => {
             type="date"
             placeholder="Date"
             value={date}
-            onChange={(e) => setDate(e.target.value)}
+            onChange={(e) => dispatch(setDate(e.target.value))}
             required
           />
         </div>
@@ -74,7 +107,7 @@ const ReceiptPaymentForm = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="paymentMethod"
             value={particulars}
-            onChange={(e) => setParticulars(e.target.value)}
+            onChange={(e) => dispatch(setParticulars(e.target.value))}
             required
           >
             <option value="">Select Payment Method</option>
@@ -99,7 +132,7 @@ const ReceiptPaymentForm = () => {
             step="0.01"
             placeholder="Amount"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => dispatch(setAmount(e.target.value))}
             required
           />
         </div>

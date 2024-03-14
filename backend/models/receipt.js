@@ -6,10 +6,9 @@ const receiptModel = mongoose.Schema({
     required: true,
     trim: true,
   },
-  receiptNumber: {
+  formNumber: {
     type: String,
     required: true,
-    unique: true,
   },
   issueDate: {
     type: Date,
@@ -22,6 +21,11 @@ const receiptModel = mongoose.Schema({
   amount: {
     type: Number,
     required: true,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
   },
 });
 

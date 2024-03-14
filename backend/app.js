@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoute.js";
 import invoiceRoute from "./routes/invoiceRoute.js";
+import paymentRoute from "./routes/paymentRoute.js";
 
 const app = express();
 app.use(cors());
@@ -12,6 +13,7 @@ dotenv.config();
 
 app.use("/auth", authRoutes);
 app.use("/invoice", invoiceRoute);
+app.use("/payment", paymentRoute);
 
 mongoose
   .connect("mongodb://localhost:27017/Isprava-billing")
