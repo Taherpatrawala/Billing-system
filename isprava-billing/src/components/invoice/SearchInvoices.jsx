@@ -99,12 +99,12 @@ const SearchInvoices = () => {
         placeholder="Search invoices..."
         value={searchTerm}
         onChange={handleSearch}
-        className="w-full p-2 mb-4 border rounded-md shadow-sm"
+        className="md:w-[60vw] p-2 m-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 shadow-md"
       />
       {filteredInvoices.map((invoice) => (
         <div
           key={invoice._id}
-          className="flex justify-between items-center m-4 p-4 border rounded-md shadow-sm cursor-pointer"
+          className="flex justify-between items-center m-4 p-4 border border-green-500 rounded-md shadow-sm cursor-pointer"
         >
           <div>
             <p className="font-bold">Invoice Number: {invoice.invoiceNumber}</p>
