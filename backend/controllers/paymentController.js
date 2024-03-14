@@ -38,7 +38,8 @@ paymentController.createPayment = async (req, res) => {
 // Controller to get all payments
 paymentController.getPayments = async (req, res) => {
   try {
-    const payments = await Payment.find();
+    const userId = req.user.id;
+    const payments = await Payment.find({ user: userId });
 
     res.status(200).json({ success: true, data: payments });
   } catch (error) {

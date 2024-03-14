@@ -9,5 +9,10 @@ paymentRoutes.post(
   authorize,
   paymentController.createPayment
 );
+paymentRoutes.get(
+  "/get-all-payments",
+  authorize,
+  paymentController.getPayments
+);
 
 export default paymentRoutes;

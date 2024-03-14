@@ -115,7 +115,6 @@ const ReceiptPaymentForm = () => {
             <option value="Check">Check</option>
             <option value="Bank Transfer">Bank Transfer</option>
             <option value="UPI">UPI</option>
-            {/* Add more payment methods as needed */}
           </select>
         </div>
         <div className="mb-6">
@@ -150,7 +149,7 @@ const ReceiptPaymentForm = () => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         receiptInfo={{
-          receiptNumber: "123",
+          receiptNumber: formNumber,
           customerName: clientName,
           particulars: particulars,
           issueDate: date,

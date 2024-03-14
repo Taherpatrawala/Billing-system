@@ -50,11 +50,11 @@ const NavBar = () => {
               <NavLink to="/invoices" className="text-white">
                 Invoices
               </NavLink>
-              <NavLink to="/customers" className="text-white">
-                Customers
+              <NavLink to="/payments" className="text-white">
+                Payments
               </NavLink>
-              <NavLink to="/settings" className="text-white">
-                Settings
+              <NavLink to="/receipts" className="text-white">
+                Receipts
               </NavLink>
             </li>
           </ul>
