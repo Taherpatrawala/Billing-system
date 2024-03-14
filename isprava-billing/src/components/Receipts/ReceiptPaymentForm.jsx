@@ -7,7 +7,7 @@ const ReceiptPaymentForm = () => {
   const [clientName, setClientName] = useState("");
   const [date, setDate] = useState("");
   const [particulars, setParticulars] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
+
   const [amount, setAmount] = useState("");
 
   const location = useLocation();
@@ -16,8 +16,6 @@ const ReceiptPaymentForm = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setIsOpen(true);
-
-    // Clear form fields
   };
 
   return (
