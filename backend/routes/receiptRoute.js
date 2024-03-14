@@ -1,5 +1,6 @@
 import express from "express";
-import receiptController from "../controllers/receiptController";
+import authorize from "../middlewares/authMiddleware.js";
+import receiptController from "../controllers/receiptController.js";
 
 const receiptRoutes = express.Router();
 

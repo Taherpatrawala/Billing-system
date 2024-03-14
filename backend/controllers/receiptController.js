@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import Receipt from "../models/receipt";
-import receipt from "../models/receipt";
+import Receipt from "../models/receipt.js";
 
 const receiptController = {};
 

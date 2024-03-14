@@ -29,6 +29,7 @@ function App() {
         <Route path="/new-receipt" element={<ReceiptPaymentForm />} />
         <Route path="/new-payment" element={<ReceiptPaymentForm />} />
         <Route path="/payments" element={<ReceiptsPayments />} />
+        <Route path="/receipts" element={<ReceiptsPayments />} />
       </Routes>
     </BrowserRouter>
   );

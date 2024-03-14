@@ -47,9 +47,9 @@ paymentController.getPayments = async (req, res) => {
 
 paymentController.deletePayment = async (req, res) => {
   try {
-    const { paymentId } = req.body;
+    const { receiptId } = req.body;
 
-    const payment = await Payment.findByIdAndDelete(paymentId);
+    const payment = await Payment.findByIdAndDelete(receiptId);
     if (!payment) {
       return res
         .status(404)

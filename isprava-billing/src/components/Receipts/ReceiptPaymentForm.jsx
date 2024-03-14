@@ -35,9 +35,13 @@ const ReceiptPaymentForm = () => {
     e.preventDefault();
     const formNum = Math.floor(Math.random() * 1000);
     dispatch(setFormNumber(`#FN${formNum}`));
-    console.log(formData);
+    let url = "";
+    type === "new-payment"
+      ? (url = "payment/create-payment")
+      : (url = "receipt/create-receipt");
+
     await axios
-      .post("http://localhost:8000/payment/create-payment", formData, {
+      .post(`http://localhost:8000/${url}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

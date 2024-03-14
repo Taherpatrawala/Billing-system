@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useLocation } from "react-router";
 import ReceiptModal from "./ReceiptModal";
 
 const ReceiptsPayments = () => {
@@ -9,17 +10,21 @@ const ReceiptsPayments = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
+  const location = useLocation();
+  const type = location.pathname.split("/")[1];
+
   useEffect(() => {
     const fetchReceipts = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/payment/get-all-payments",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        let url = "";
+        type === "payments"
+          ? (url = "payment/get-all-payments")
+          : (url = "receipt/get-all-receipts");
+        const response = await axios.get(`http://localhost:8000/${url}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         setReceipts(response.data.data);
       } catch (error) {
         console.error("Error fetching receipts:", error);
@@ -27,7 +32,7 @@ const ReceiptsPayments = () => {
     };
 
     fetchReceipts();
-  }, []);
+  }, [type]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -47,12 +52,16 @@ const ReceiptsPayments = () => {
 
   const handleDeleteReceipt = async (receiptId) => {
     try {
-      await axios.delete(`http://localhost:8000/payment/delete-payment`, {
+      let url = "";
+      type === "payments"
+        ? (url = "payment/delete-payment")
+        : (url = "receipt/delete-receipt");
+      await axios.delete(`http://localhost:8000/${url}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         data: {
-          paymentId: receiptId,
+          receiptId,
         },
       });
       const newReceipts = receipts.filter(
