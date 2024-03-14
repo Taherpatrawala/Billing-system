@@ -3,6 +3,7 @@ import NavBar from "./components/Navbar/Navbar";
 import InvoiceForm from "./components/invoice/invoiceComponents/InvoiceForm";
 import Login from "./components/authComponents/login";
 import SearchInvoices from "./components/invoice/SearchInvoices";
+import ReceiptPaymentForm from "./components/Receipts/ReceiptPaymentForm";
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
         <Route path="/new-invoice" element={<InvoiceForm />} />
         <Route path="/invoice/:id" element={<InvoiceForm />} />
         <Route path="/invoices" element={<SearchInvoices />} />
+        <Route path="/new-receipt" element={<ReceiptPaymentForm />} />
+        <Route path="/new-payment" element={<ReceiptPaymentForm />} />
       </Routes>
     </BrowserRouter>
   );
