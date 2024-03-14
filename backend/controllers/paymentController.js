@@ -86,15 +86,18 @@ paymentController.updatePayment = async (req, res) => {
 // Controller to delete a payment by ID
 paymentController.deletePayment = async (req, res) => {
   try {
-    const payment = await Payment.findByIdAndDelete(req.params.id);
+    const { paymentId } = req.body;
 
+    const payment = await Payment.findByIdAndDelete(paymentId);
     if (!payment) {
       return res
         .status(404)
         .json({ success: false, error: "Payment not found" });
     }
 
-    res.status(200).json({ success: true, data: {} });
+    res
+      .status(200)
+      .json({ success: true, message: "Payment deleted successfully" });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }

@@ -153,7 +153,7 @@ const ReceiptPaymentForm = () => {
           customerName: clientName,
           particulars: particulars,
           issueDate: date,
-          total: amount,
+          amount,
         }}
       />
     </div>

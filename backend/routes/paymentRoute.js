@@ -14,5 +14,9 @@ paymentRoutes.get(
   authorize,
   paymentController.getPayments
 );
-
+paymentRoutes.delete(
+  "/delete-payment",
+  authorize,
+  paymentController.deletePayment
+);
 export default paymentRoutes;

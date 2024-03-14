@@ -1,9 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import ReceiptModal from "./ReceiptModal";
 
 const ReceiptsPayments = () => {
   const [receipts, setReceipts] = useState([]);
+  const [receipt, setReceipt] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchReceipts = async () => {
@@ -29,9 +33,38 @@ const ReceiptsPayments = () => {
     setSearchTerm(e.target.value);
   };
 
+  const handleClick = (receiptId) => {
+    const selectedInvoice = receipts.filter(
+      (invoice) => invoice._id === receiptId
+    );
+
+    setReceipt(...selectedInvoice);
+    setIsOpen(true);
+  };
   const filteredReceipts = receipts.filter((receipt) =>
     receipt.customerName.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleDeleteReceipt = async (receiptId) => {
+    try {
+      await axios.delete(`http://localhost:8000/payment/delete-payment`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        data: {
+          paymentId: receiptId,
+        },
+      });
+      const newReceipts = receipts.filter(
+        (receipt) => receipt._id !== receiptId
+      );
+      toast.success("Receipt deleted successfully");
+      setReceipts(newReceipts);
+    } catch (error) {
+      toast.error("Error deleting receipt");
+      console.error("Error deleting receipt:", error);
+    }
+  };
 
   return (
     <div>
@@ -48,16 +81,45 @@ const ReceiptsPayments = () => {
         {filteredReceipts.map((receipt) => (
           <div
             key={receipt._id}
-            className="border border-green-500 rounded-md shadow-sm m-4 p-4 w-[60vw]"
+            className="border border-green-500 flex justify-between rounded-md shadow-sm m-4 p-4 w-[60vw]"
           >
-            <p className="font-bold">Receipt Number: {receipt.formNumber}</p>
-            <p>Client Name: {receipt.customerName}</p>
-            <p>Date: {receipt.issueDate}</p>
-            <p>Particulars: {receipt.particulars}</p>
-            <p>Amount: {receipt.amount}</p>
+            <div className="">
+              <p className="font-bold">Receipt Number: {receipt.formNumber}</p>
+              <p>Client Name: {receipt.customerName}</p>
+              <p>Date: {receipt.issueDate}</p>
+              <p>Particulars: {receipt.particulars}</p>
+              <p>Amount: {receipt.amount}</p>
+            </div>
+            <div className="">
+              <button
+                onClick={() => handleClick(receipt._id)}
+                className="bg-blue-500 text-white py-2 px-4 rounded-md mr-2"
+              >
+                View
+              </button>
+              <button
+                onClick={() => handleDeleteReceipt(receipt._id)}
+                className="bg-red-500 text-white py-2 px-4 rounded-md mr-2"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
+
+      <ReceiptModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        receiptInfo={{
+          receiptNumber: receipt.formNumber,
+          customerName: receipt.customerName,
+          particulars: receipt.particulars,
+          issueDate: receipt.issueDate,
+          amount: receipt.amount,
+        }}
+      />
+      <Toaster />
     </div>
   );
 };
