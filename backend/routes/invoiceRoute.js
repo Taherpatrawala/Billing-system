@@ -5,6 +5,7 @@ import invoiceController from "../controllers/invoiceController.js";
 const invoiceRoute = express.Router();
 
 invoiceRoute.post("/createInvoice", authorize, invoiceController.createInvoice);
+invoiceRoute.put("/editInvoice/:id", authorize, invoiceController.editInvoice);
 invoiceRoute.get("/getAllInvoice", authorize, invoiceController.getAllInvoice);
 invoiceRoute.get(
   "/getInvoicesCount",

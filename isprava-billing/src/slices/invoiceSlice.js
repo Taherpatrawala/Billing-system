@@ -31,7 +31,7 @@ const invoiceSlice = createSlice({
       state.discount = action.payload;
     },
     setGST: (state, action) => {
-      state.tax = action.payload;
+      state.gst = action.payload;
     },
     setInvoiceNumber: (state, action) => {
       state.invoiceNumber = action.payload;
@@ -58,8 +58,9 @@ const invoiceSlice = createSlice({
 });
 
 export const {
+  setAllProperties,
   setDiscount,
-  setTax,
+  setGST,
   setInvoiceNumber,
   setIssueDate,
   setCustomerName,

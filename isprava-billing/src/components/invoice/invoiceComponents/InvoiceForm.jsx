@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { uid } from "uid";
 import toast, { Toaster } from "react-hot-toast";
 import InvoiceItem from "./InvoiceItem";
 import InvoiceModal from "./InvoiceModal";
 import { createInvoice } from "../../../helpers/createInvoice";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import {
   setDiscount,
-  setTax,
+  setGST,
   setInvoiceNumber,
   setIssueDate,
   setCustomerName,
@@ -37,6 +38,8 @@ const InvoiceForm = () => {
   const items = useSelector((state) => state.invoiceSlice.items);
 
   const dispatch = useDispatch();
+  const location = useLocation();
+  const { id } = useParams();
   const reviewInvoiceHandler = (event) => {
     event.preventDefault();
     setIsOpen(true);
@@ -95,6 +98,7 @@ const InvoiceForm = () => {
       return prev + Number(curr.price * Math.floor(curr.quantity));
     else return prev;
   }, 0);
+
   const taxRate = (tax * subtotal) / 100;
   const discountRate = (discount * subtotal) / 100;
   const total = subtotal - discountRate + taxRate;
@@ -105,22 +109,39 @@ const InvoiceForm = () => {
     customerName: customerName,
     items: items,
     subtotal: subtotal,
-    gst: taxRate,
+    gst: tax,
     discount: discountRate,
     grandTotal: total,
   };
 
-  const handleSave = async () => {
+  const handleSaveInvoice = async () => {
     const newInvoice = await createInvoice(invoice)
       .then((res) => {
         toast.success(res.message);
         setIsOpen(true);
       })
       .catch((err) => {
-        console.log(err.message);
-        toast.error(err.message);
+        console.log(err.response);
+        toast.error(err.response.data.message || err.response);
       });
     console.log(newInvoice);
+  };
+
+  const handleEditInvoice = async () => {
+    await axios
+      .put(`http://localhost:8000/invoice/editInvoice/${id}`, invoice, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        setIsOpen(true);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        toast.error(err.response.data.message || err.response);
+      });
   };
 
   useEffect(() => {
@@ -128,7 +149,10 @@ const InvoiceForm = () => {
       const InvoiceNumber = await getInvoiceNumber();
       dispatch(setInvoiceNumber(InvoiceNumber + 1));
     };
-    fetchInvoice();
+    if (location.pathname == "/new-invoice") {
+      console.log("fetching invoice");
+      fetchInvoice();
+    } else null;
   }, []);
 
   return (
@@ -269,7 +293,7 @@ const InvoiceForm = () => {
               issueDate,
               customerName,
               subtotal,
-              taxRate,
+              taxRate: tax,
               discountRate,
               total,
             }}
@@ -285,14 +309,13 @@ const InvoiceForm = () => {
                 <input
                   className="w-full rounded-r-none bg-white shadow-sm"
                   type="number"
+                  min="0"
                   name="tax"
                   id="tax"
-                  min="0.01"
-                  step="0.01"
-                  placeholder="0.0"
+                  placeholder="GST Rate"
                   value={tax}
                   onChange={(event) =>
-                    dispatch(setTax(parseInt(event.target.value)))
+                    dispatch(setGST(parseInt(event.target.value)))
                   }
                 />
                 <span className="rounded-r-md bg-gray-200 py-2 px-4 text-gray-500 shadow-sm">
@@ -327,8 +350,19 @@ const InvoiceForm = () => {
               </div>
             </div>
           </div>
-          <button onClick={handleSave} className="border" type="submit">
+          <button
+            onClick={handleSaveInvoice}
+            className="border m-2 p-2 bg-green-300 text-white"
+            type="submit"
+          >
             Save
+          </button>
+          <button
+            onClick={handleEditInvoice}
+            className="border m-2 p-2 bg-purple-300 text-white"
+            type="submit"
+          >
+            Update
           </button>
         </div>
         <Toaster />

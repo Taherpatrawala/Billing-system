@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { setAllProperties } from "../../slices/invoiceSlice";
 import InvoiceModal from "./invoiceComponents/InvoiceModal";
 
 const SearchInvoices = () => {
@@ -8,7 +10,9 @@ const SearchInvoices = () => {
   const [invoice, setInvoice] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -38,7 +42,13 @@ const SearchInvoices = () => {
     setIsOpen(true);
   };
 
-  const handleEdit = () => {};
+  const handleEdit = (invoiceId) => {
+    const selectedInvoice = invoices.filter(
+      (invoice) => invoice._id === invoiceId
+    );
+    dispatch(setAllProperties(...selectedInvoice));
+    navigate(`/invoice/${invoiceId}`);
+  };
   const handleCloseModal = () => {
     setIsOpen(false);
   };
@@ -103,10 +113,10 @@ const SearchInvoices = () => {
             taxRate: invoice.gst,
             discountRate: invoice.discount,
             total: invoice.grandTotal,
-          }} // Pass selected invoice to modal
+          }}
           onAddNextInvoice={null}
           onCloseModal={handleCloseModal}
-          items={invoice.items} // Pass onCloseModal function to close modal
+          items={invoice.items}
         />
       )}
     </div>
