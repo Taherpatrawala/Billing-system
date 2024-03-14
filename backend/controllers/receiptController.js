@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
-import Payment from "../models/payment.js";
+import Receipt from "../models/receipt";
+import receipt from "../models/receipt";
 
-const paymentController = {};
+const receiptController = {};
 
-paymentController.createPayment = async (req, res) => {
+receiptController.createReceipt = async (req, res) => {
   try {
     const { formNumber, customerName, amount, issueDate, particulars } =
       req.body;
@@ -13,7 +14,7 @@ paymentController.createPayment = async (req, res) => {
       return res.status(403).json("User Id is invalid");
     }
 
-    const payment = new Payment({
+    const receipt = new Receipt({
       formNumber,
       customerName,
       amount,
@@ -22,46 +23,46 @@ paymentController.createPayment = async (req, res) => {
       user: userId,
     });
 
-    await payment.save();
+    await receipt.save();
 
     res.status(201).json({
       success: true,
-      data: payment,
-      message: "Payment registered successfully",
+      data: receipt,
+      message: "Receipt created successfully",
     });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
 };
 
-paymentController.getPayments = async (req, res) => {
+receiptController.getReceipts = async (req, res) => {
   try {
     const userId = req.user.id;
-    const payments = await Payment.find({ user: userId });
+    const receipts = await Receipt.find({ user: userId });
 
-    res.status(200).json({ success: true, data: payments });
+    res.status(200).json({ success: true, data: receipts });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
 };
 
-paymentController.deletePayment = async (req, res) => {
+receiptController.deleteReceipt = async (req, res) => {
   try {
-    const { paymentId } = req.body;
+    const { receiptId } = req.body;
 
-    const payment = await Payment.findByIdAndDelete(paymentId);
-    if (!payment) {
+    const receipt = await Receipt.findByIdAndDelete(receiptId);
+    if (!receipt) {
       return res
         .status(404)
-        .json({ success: false, error: "Payment not found" });
+        .json({ success: false, error: "Receipt not found" });
     }
 
     res
       .status(200)
-      .json({ success: true, message: "Payment deleted successfully" });
+      .json({ success: true, message: "Receipt deleted successfully" });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
 };
 
-export default paymentController;
+export default receiptController;
