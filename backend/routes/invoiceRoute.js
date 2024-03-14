@@ -12,5 +12,10 @@ invoiceRoute.get(
   authorize,
   invoiceController.getInvoicesCount
 );
+invoiceRoute.delete(
+  "/deleteInvoice",
+  authorize,
+  invoiceController.deleteInvoice
+);
 
 export default invoiceRoute;

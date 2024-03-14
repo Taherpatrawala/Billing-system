@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAllProperties } from "../../slices/invoiceSlice";
+import toast, { Toaster } from "react-hot-toast";
 import InvoiceModal from "./invoiceComponents/InvoiceModal";
 
 const SearchInvoices = () => {
@@ -33,6 +34,7 @@ const SearchInvoices = () => {
     fetchInvoices();
   }, []);
 
+  console.log(invoices);
   const handleClick = (invoiceId) => {
     const selectedInvoice = invoices.filter(
       (invoice) => invoice._id === invoiceId
@@ -55,6 +57,31 @@ const SearchInvoices = () => {
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleDeleteInvoice = async (invoiceId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8000/invoice/deleteInvoice/`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          data: {
+            _id: invoiceId,
+          },
+        }
+      );
+      toast.success("Invoice Deleted Successfully");
+      const newInvoices = invoices.filter(
+        (invoice) => invoice._id !== invoiceId
+      );
+      setInvoices(newInvoices);
+    } catch (error) {
+      toast.error("Error deleting invoice");
+      console.error("Error deleting invoice:", error);
+    }
   };
 
   const filteredInvoices = invoices.filter(
@@ -98,6 +125,12 @@ const SearchInvoices = () => {
             >
               Edit
             </button>
+            <button
+              onClick={() => handleDeleteInvoice(invoice._id)}
+              className="bg-red-500 text-white py-2 px-4 rounded-md m-2"
+            >
+              Delete
+            </button>
           </div>
         </div>
       ))}
@@ -119,6 +152,7 @@ const SearchInvoices = () => {
           items={invoice.items}
         />
       )}
+      <Toaster />
     </div>
   );
 };

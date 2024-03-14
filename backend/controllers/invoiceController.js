@@ -65,3 +65,21 @@ invoiceController.editInvoice = async (req, res) => {
       res.status(400).send(err);
     });
 };
+
+invoiceController.deleteInvoice = async (req, res) => {
+  const userId = req.user.id;
+  const invoiceId = req.body._id;
+  if (
+    !mongoose.isValidObjectId(userId) ||
+    !mongoose.isValidObjectId(invoiceId)
+  ) {
+    return res.status(400).json({ message: "Invalid Id" });
+  }
+  await Invoice.deleteOne({ _id: invoiceId, user: userId })
+    .then(() => {
+      res.status(200).json({ message: "Invoice deleted successfully" });
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+};
