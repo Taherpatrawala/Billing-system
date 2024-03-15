@@ -20,7 +20,7 @@ app.use("/receipt", receiptRoutes);
 app.use("/dashboard", dashboardRoute);
 
 mongoose
-  .connect("mongodb://localhost:27017/Isprava-billing")
+  .connect(process.env.Mongo_Uri)
   .then(() => {
     console.log("Connected to database");
     const PORT = 8000;

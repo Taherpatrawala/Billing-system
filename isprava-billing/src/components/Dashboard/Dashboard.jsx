@@ -46,22 +46,24 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto mt-8">
-      <div className="bg-blue-200 p-6 rounded-md shadow-md">
-        <h2 className="text-lg font-semibold mb-2">Sales Report</h2>
-        <p>Total Sales: ₹{salesReport}</p>
-      </div>
-      <div className="bg-green-200 p-6 rounded-md shadow-md">
-        <h2 className="text-lg font-semibold mb-2">Expense Report</h2>
-        <p>Total Expenses: ₹{expenseReport}</p>
-      </div>
-      <div className="bg-yellow-200 p-6 rounded-md shadow-md">
-        <h2 className="text-lg font-semibold mb-2">Cash Flow In</h2>
-        <p>Total Cash Flow In: ₹{cashFlowIn}</p>
-      </div>
-      <div className="bg-pink-200 p-6 rounded-md shadow-md">
-        <h2 className="text-lg font-semibold mb-2">Cash In Hand</h2>
-        <p>Cash In Hand: ₹{cashInHand}</p>
+    <div className="min-h-[70vh] flex justify-center items-center">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl lg:w-[100vw] mx-auto mt-8">
+        <div className="bg-blue-200 p-6 lg:p-12 rounded-md shadow-md">
+          <h2 className="text-lg font-semibold mb-2">Sales Report</h2>
+          <p>Total Sales: ₹{salesReport}</p>
+        </div>
+        <div className="bg-green-200 p-6 lg:p-12 rounded-md shadow-md">
+          <h2 className="text-lg font-semibold mb-2">Expense Report</h2>
+          <p>Total Expenses: ₹{expenseReport}</p>
+        </div>
+        <div className="bg-yellow-200 p-6 lg:p-12 rounded-md shadow-md">
+          <h2 className="text-lg font-semibold mb-2">Cash Flow In</h2>
+          <p>Total Cash Flow In: ₹{cashFlowIn}</p>
+        </div>
+        <div className="bg-pink-200 p-6 lg:p-12 rounded-md shadow-md">
+          <h2 className="text-lg font-semibold mb-2">Cash In Hand</h2>
+          <p>Cash In Hand: ₹{cashInHand}</p>
+        </div>
       </div>
     </div>
   );
