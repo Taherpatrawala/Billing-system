@@ -1,12 +1,15 @@
 import { NavLink } from "react-router-dom";
-
+import { useState } from "react";
+import MNavbar from "./MNavbar";
 const NavBar = () => {
+  const [width, setWidth] = useState(false);
   return (
     <div>
+      {width ? <MNavbar width={width} setWidth={setWidth} /> : null}
       <nav className="bg-gray-800 p-4">
         <div className="container mx-auto">
-          <ul className="flex items-center justify-between">
-            <li className="flex items-center">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
               <NavLink to="/" className="flex items-center text-white">
                 <span className="mr-2">
                   <img
@@ -17,8 +20,9 @@ const NavBar = () => {
                 </span>
                 <span className="text-xl font-bold">Your Logo</span>
               </NavLink>
-            </li>
-            <li className="flex space-x-4">
+            </div>
+
+            <div className="hidden md:flex space-x-4 ">
               <NavLink to="/dashboard" className="text-white">
                 Dashboard
               </NavLink>
@@ -56,8 +60,20 @@ const NavBar = () => {
               <NavLink to="/receipts" className="text-white">
                 Receipts
               </NavLink>
-            </li>
-          </ul>
+            </div>
+            <div className="md:hidden z-50">
+              <p
+                onClick={() => {
+                  setWidth((prev) => !prev);
+                }}
+                className={`z-50 text-2xl text-white touch-none ${
+                  width ? "rotate-90" : null
+                } transition-all`}
+              >
+                &#9776;
+              </p>
+            </div>
+          </div>
         </div>
       </nav>
     </div>

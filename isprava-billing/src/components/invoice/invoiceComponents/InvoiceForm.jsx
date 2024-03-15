@@ -233,30 +233,32 @@ const InvoiceForm = () => {
             />
           </div>
         </div>
-        <table className="w-full p-4 text-left">
-          <thead>
-            <tr className="border-b border-gray-900/10 text-sm md:text-base">
-              <th>ITEM</th>
-              <th>QTY</th>
-              <th className="text-center">PRICE</th>
-              <th className="text-center">TOTAL</th>
-              <th className="text-center">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item) => (
-              <InvoiceItem
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                quantity={item.quantity}
-                price={item.price}
-                onDeleteItem={deleteItemHandler}
-                onEdtiItem={edtiItemHandler}
-              />
-            ))}
-          </tbody>
-        </table>
+        <div className="overflow-scroll">
+          <table className="w-full p-4 text-left">
+            <thead>
+              <tr className="border-b border-gray-900/10 text-sm md:text-base">
+                <th>ITEM</th>
+                <th>QTY</th>
+                <th className="text-center">PRICE</th>
+                <th className="text-center">TOTAL</th>
+                <th className="text-center">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item) => (
+                <InvoiceItem
+                  key={item.id}
+                  id={item.id}
+                  name={item.name}
+                  quantity={item.quantity}
+                  price={item.price}
+                  onDeleteItem={deleteItemHandler}
+                  onEdtiItem={edtiItemHandler}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
         <button
           className="rounded-md bg-blue-500 px-4 py-2 text-sm text-white shadow-sm hover:bg-blue-600"
           type="button"
