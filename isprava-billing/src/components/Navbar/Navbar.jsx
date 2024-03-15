@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import MNavbar from "./MNavbar";
+import logo from "../../assets/logo.svg";
 const NavBar = () => {
   const [width, setWidth] = useState(false);
   return (
@@ -12,13 +13,8 @@ const NavBar = () => {
             <div className="flex items-center">
               <NavLink to="/" className="flex items-center text-white">
                 <span className="mr-2">
-                  <img
-                    className="w-12 h-12"
-                    src="https://i.postimg.cc/hGZKzdkS/logo.png"
-                    alt="arc-invoice"
-                  />
+                  <img className="" src={logo} alt="arc-invoice" />
                 </span>
-                <span className="text-xl font-bold">Your Logo</span>
               </NavLink>
             </div>
 

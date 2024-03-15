@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.svg";
 
 export default function Login() {
   const location = useLocation();
@@ -78,11 +79,7 @@ export default function Login() {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6  lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
+          <img className="mx-auto" src={logo} alt="Your Company" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             {root} to your account
           </h2>
@@ -159,15 +156,28 @@ export default function Login() {
             </div>
           </div>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{" "}
-            <a
-              href="#"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Start a 14 day free trial
-            </a>
-          </p>
+          {root === "Log in" && (
+            <p className="mt-10 text-center text-sm text-gray-500">
+              Not a member?{" "}
+              <NavLink
+                to="/signup"
+                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              >
+                Sign up now!
+              </NavLink>
+            </p>
+          )}
+          {root === "Sign Up" && (
+            <p className="mt-10 text-center text-sm text-gray-500">
+              Already a member?{" "}
+              <NavLink
+                to="/login"
+                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              >
+                Log in
+              </NavLink>
+            </p>
+          )}
         </div>
       </div>
     </>
