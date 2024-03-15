@@ -169,8 +169,8 @@ const InvoiceModal = ({
                       <span>₹{invoiceInfo.discountRate.toFixed(2)}</span>
                     </div>
                     <div className="flex w-full justify-between">
-                      <span className="font-bold">Tax:</span>
-                      <span>₹{invoiceInfo.taxRate.toFixed(2)}</span>
+                      <span className="font-bold">GST:</span>
+                      <span>%{invoiceInfo.taxRate.toFixed(2)}</span>
                     </div>
                     <div className="flex w-full justify-between border-t border-black/10 py-2">
                       <span className="font-bold">GRAND TOTAL:</span>

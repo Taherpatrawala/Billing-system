@@ -272,7 +272,7 @@ const InvoiceForm = () => {
             </span>
           </div>
           <div className="flex w-full justify-between md:w-1/2">
-            <span className="font-bold">Tax:</span>
+            <span className="font-bold">GST:</span>
             <span>
               ({tax || "0"}%)₹{taxRate.toFixed(2)}
             </span>
@@ -311,7 +311,7 @@ const InvoiceForm = () => {
           <div className="space-y-4 py-2">
             <div className="space-y-2">
               <label className="text-sm font-bold md:text-base" htmlFor="tax">
-                Tax rate:
+                GST rate:
               </label>
               <div className="flex items-center">
                 <input

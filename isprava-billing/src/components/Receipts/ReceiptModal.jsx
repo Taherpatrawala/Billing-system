@@ -122,7 +122,7 @@ const ReceiptModal = ({ isOpen, setIsOpen, receiptInfo }) => {
                     <span className="font-bold">Particulars:</span>
                     <span>{receiptInfo.particulars}</span>
                     <span className="font-bold">Amount:</span>
-                    <span>{receiptInfo.amount}</span>
+                    <span>₹{receiptInfo.amount}</span>
                   </div>
 
                   {/* Add receipt specific information here */}

@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoute.js";
 import invoiceRoute from "./routes/invoiceRoute.js";
 import paymentRoute from "./routes/paymentRoute.js";
 import receiptRoutes from "./routes/receiptRoute.js";
+import dashboardRoute from "./routes/dashboardRoute.js";
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.use("/auth", authRoutes);
 app.use("/invoice", invoiceRoute);
 app.use("/payment", paymentRoute);
 app.use("/receipt", receiptRoutes);
+app.use("/dashboard", dashboardRoute);
 
 mongoose
   .connect("mongodb://localhost:27017/Isprava-billing")

@@ -110,7 +110,7 @@ const SearchInvoices = () => {
             <p className="font-bold">Invoice Number: {invoice.invoiceNumber}</p>
             <p>Customer Name: {invoice.customerName}</p>
             <p>Invoice Date: {invoice.invoiceDate}</p>
-            <p>Grand Total: {invoice.grandTotal}</p>
+            <p>Grand Total: ₹{invoice.grandTotal}</p>
           </div>
           <div>
             <button

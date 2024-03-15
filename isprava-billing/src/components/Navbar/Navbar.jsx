@@ -23,7 +23,7 @@ const NavBar = () => {
                 Dashboard
               </NavLink>
               <div className="relative group">
-                <NavLink to="/invoice" className="text-white">
+                <NavLink to="/new-invoice" className="text-white">
                   Create
                 </NavLink>
                 <div className="z-30 absolute hidden group-hover:flex flex-col min-w-max p-2 bg-white mt-2 border-2 shadow-md -translate-y-3 space-y-2 text-gray-800 rounded-md ">

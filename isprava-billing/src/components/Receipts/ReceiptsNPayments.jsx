@@ -97,7 +97,7 @@ const ReceiptsPayments = () => {
               <p>Client Name: {receipt.customerName}</p>
               <p>Date: {receipt.issueDate}</p>
               <p>Particulars: {receipt.particulars}</p>
-              <p>Amount: {receipt.amount}</p>
+              <p>Amount: ₹{receipt.amount}</p>
             </div>
             <div className="">
               <button
