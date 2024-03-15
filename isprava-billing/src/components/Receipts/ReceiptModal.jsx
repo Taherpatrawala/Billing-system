@@ -106,7 +106,7 @@ const ReceiptModal = ({ isOpen, setIsOpen, receiptInfo }) => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
+            <div className="border-2 border-yellow-500 my-8 inline-block w-full max-w-md transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all">
               <div className="p-4" id="print">
                 <h1 className="text-center text-lg font-bold text-gray-900">
                   RECEIPT

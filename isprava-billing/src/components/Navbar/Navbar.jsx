@@ -7,7 +7,7 @@ const NavBar = () => {
   return (
     <div>
       {width ? <MNavbar width={width} setWidth={setWidth} /> : null}
-      <nav className="bg-gray-800 p-4">
+      <nav className="bg-[#413f3f] p-4">
         <div className="container mx-auto">
           <div className="flex items-center justify-between">
             <div className="flex items-center">

@@ -8,6 +8,8 @@ const ReceiptsPayments = () => {
   const [receipts, setReceipts] = useState([]);
   const [receipt, setReceipt] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [formNumberFilter, setFormNumberFilter] = useState("");
+  const [dateFilter, setDateFilter] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   const location = useLocation();
@@ -41,17 +43,32 @@ const ReceiptsPayments = () => {
     setSearchTerm(e.target.value);
   };
 
-  const handleClick = (receiptId) => {
-    const selectedInvoice = receipts.filter(
-      (invoice) => invoice._id === receiptId
-    );
+  const handleFormNumberFilter = (e) => {
+    setFormNumberFilter(e.target.value);
+  };
 
-    setReceipt(...selectedInvoice);
+  const handleDateFilter = (e) => {
+    setDateFilter(e.target.value);
+  };
+
+  const handleClick = (receiptId) => {
+    const selectedReceipt = receipts.find(
+      (receipt) => receipt._id === receiptId
+    );
+    setReceipt(selectedReceipt);
     setIsOpen(true);
   };
-  const filteredReceipts = receipts.filter((receipt) =>
-    receipt.customerName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+
+  const filteredReceipts = receipts.filter((receipt) => {
+    const matchesSearchTerm = receipt.customerName
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesFormNumber = receipt.formNumber
+      .toString()
+      .includes(formNumberFilter);
+    const matchesDate = receipt.issueDate.includes(dateFilter);
+    return matchesSearchTerm && matchesFormNumber && matchesDate;
+  });
 
   const handleDeleteReceipt = async (receiptId) => {
     try {
@@ -80,13 +97,27 @@ const ReceiptsPayments = () => {
 
   return (
     <div>
-      <div className="w-full flex justify-center">
+      <div className="flex justify-center">
         <input
           type="text"
           placeholder="Search by client name..."
           value={searchTerm}
           onChange={handleSearch}
-          className="md:w-[60vw] p-2 m-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+          className="md:w-[30vw] p-2 m-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 shadow-md"
+        />
+        <input
+          type="text"
+          placeholder="Filter by Form Number..."
+          value={formNumberFilter}
+          onChange={handleFormNumberFilter}
+          className="md:w-[30vw] p-2 m-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 shadow-md"
+        />
+        <input
+          type="date"
+          placeholder="Filter by Date..."
+          value={dateFilter}
+          onChange={handleDateFilter}
+          className="md:w-[30vw] p-2 m-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 shadow-md"
         />
       </div>
       <div className="flex flex-col justify-center items-center">
