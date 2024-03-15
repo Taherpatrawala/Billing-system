@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const location = useLocation();
   const path = location.pathname;
-  const root = path === "/login" ? "Log in" : "Sign in";
+  const root = path === "/login" ? "Log in" : "Sign Up";
   console.log(path);
 
   const [email, setEmail] = useState("");
@@ -45,6 +45,7 @@ export default function Login() {
       console.log(LogInData.data);
 
       localStorage.setItem("token", LogInData.data?.data.token);
+      navigate("/dashboard");
     } else {
       const SignInData = await axios.post(
         `${import.meta.env.VITE_SERVER_LINK}/auth/signin`,
@@ -54,6 +55,8 @@ export default function Login() {
         }
       );
 
+      navigate("/login");
+
       const popupMsg =
         SignInData.data?.errors[0]?.msg || SignInData.data?.errors[0];
       popupMsg
@@ -62,7 +65,7 @@ export default function Login() {
               border: "1px solid #713200",
             },
           })
-        : toast.success("Signed in Succefully!", {
+        : toast.success("Sign Up in Succefull! Pls login", {
             style: {
               border: "1px solid #713200",
             },

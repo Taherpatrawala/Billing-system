@@ -12,16 +12,7 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div className="min-h-screen bg-gray-100">
-              <div className="mx-auto max-w-7xl">
-                <InvoiceForm />
-              </div>
-            </div>
-          }
-        />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Login />} />
         <Route path="/new-invoice" element={<InvoiceForm />} />

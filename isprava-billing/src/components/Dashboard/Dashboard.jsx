@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const Dashboard = () => {
   const [salesReport, setSalesReport] = useState(0);
@@ -7,7 +8,13 @@ const Dashboard = () => {
   const [cashFlowIn, setCashFlowIn] = useState(0);
   const [cashInHand, setCashInHand] = useState(0);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return navigate("/signup");
+    }
     const fetchReports = async () => {
       const headers = {
         headers: {
