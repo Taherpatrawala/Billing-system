@@ -4,7 +4,7 @@ export const getInvoiceNumber = async () => {
   const token = localStorage.getItem("token");
   try {
     const response = await axios.get(
-      "http://localhost:8000/invoice/getInvoicesCount",
+      `${import.meta.env.VITE_SERVER_LINK}/invoice/getInvoicesCount`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -20,11 +20,14 @@ const ReceiptsPayments = () => {
         type === "payments"
           ? (url = "payment/get-all-payments")
           : (url = "receipt/get-all-receipts");
-        const response = await axios.get(`http://localhost:8000/${url}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(
+          `${import.meta.env.VITE_SERVER_LINK}/${url}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         setReceipts(response.data.data);
       } catch (error) {
         console.error("Error fetching receipts:", error);
@@ -56,7 +59,7 @@ const ReceiptsPayments = () => {
       type === "payments"
         ? (url = "payment/delete-payment")
         : (url = "receipt/delete-receipt");
-      await axios.delete(`http://localhost:8000/${url}`, {
+      await axios.delete(`${import.meta.env.VITE_SERVER_LINK}/${url}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

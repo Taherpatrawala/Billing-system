@@ -41,7 +41,7 @@ const ReceiptPaymentForm = () => {
       : (url = "receipt/create-receipt");
 
     await axios
-      .post(`http://localhost:8000/${url}`, formData, {
+      .post(`${import.meta.env.VITE_SERVER_LINK}/${url}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

@@ -19,7 +19,7 @@ const SearchInvoices = () => {
     const fetchInvoices = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/invoice/getAllInvoice",
+          `${import.meta.env.VITE_SERVER_LINK}/invoice/getAllInvoice`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -62,7 +62,7 @@ const SearchInvoices = () => {
   const handleDeleteInvoice = async (invoiceId) => {
     try {
       await axios.delete(
-        `http://localhost:8000/invoice/deleteInvoice/`,
+        `${import.meta.env.VITE_SERVER_LINK}/invoice/deleteInvoice/`,
 
         {
           headers: {

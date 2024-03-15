@@ -4,7 +4,7 @@ export const createInvoice = async (invoiceData) => {
   const token = localStorage.getItem("token");
 
   const response = await axios.post(
-    "http://localhost:8000/invoice/createInvoice",
+    `${import.meta.env.VITE_SERVER_LINK}/invoice/createInvoice`,
     invoiceData,
     {
       headers: {

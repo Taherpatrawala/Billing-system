@@ -133,11 +133,15 @@ const InvoiceForm = () => {
 
   const handleEditInvoice = async () => {
     await axios
-      .put(`http://localhost:8000/invoice/editInvoice/${id}`, invoice, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      .put(
+        `${import.meta.env.VITE_SERVER_LINK}/invoice/editInvoice/${id}`,
+        invoice,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((res) => {
         toast.success(res.data.message);
         setIsOpen(true);

@@ -16,19 +16,19 @@ const Dashboard = () => {
       };
       try {
         const salesResponse = await axios.get(
-          "http://localhost:8000/dashboard/get-sales-report",
+          `${import.meta.env.VITE_SERVER_LINK}/dashboard/get-sales-report`,
           headers
         );
         setSalesReport(salesResponse.data.totalSales);
 
         const expenseResponse = await axios.get(
-          "http://localhost:8000/dashboard/get-expense-report",
+          `${import.meta.env.VITE_SERVER_LINK}/dashboard/get-expense-report`,
           headers
         );
         setExpenseReport(expenseResponse.data.totalExpenses);
 
         const cashFlowInResponse = await axios.get(
-          "http://localhost:8000/dashboard/get-cash-flow-in",
+          `${import.meta.env.VITE_SERVER_LINK}/dashboard/get-cash-flow-in`,
           headers
         );
         setCashFlowIn(cashFlowInResponse.data.totalCashFlowIn);

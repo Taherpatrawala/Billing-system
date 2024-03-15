@@ -16,10 +16,13 @@ export default function Login() {
 
   const handleSubmit = async () => {
     if (path === "/login") {
-      const LogInData = await axios.post("http://localhost:8000/auth/login", {
-        email,
-        password,
-      });
+      const LogInData = await axios.post(
+        `${import.meta.env.VITE_SERVER_LINK}/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
 
       const popupMsg =
         LogInData.data?.errors[0]?.msg || LogInData.data?.errors[0];
@@ -43,10 +46,13 @@ export default function Login() {
 
       localStorage.setItem("token", LogInData.data?.data.token);
     } else {
-      const SignInData = await axios.post("http://localhost:8000/auth/signin", {
-        email,
-        password,
-      });
+      const SignInData = await axios.post(
+        `${import.meta.env.VITE_SERVER_LINK}/auth/signin`,
+        {
+          email,
+          password,
+        }
+      );
 
       const popupMsg =
         SignInData.data?.errors[0]?.msg || SignInData.data?.errors[0];
