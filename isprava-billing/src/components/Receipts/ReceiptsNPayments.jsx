@@ -136,13 +136,13 @@ const ReceiptsPayments = () => {
             <div className="">
               <button
                 onClick={() => handleClick(receipt._id)}
-                className="bg-blue-500 text-white py-2 px-4 rounded-md mr-2"
+                className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md mr-2 transition-all duration-200"
               >
                 View
               </button>
               <button
                 onClick={() => handleDeleteReceipt(receipt._id)}
-                className="bg-red-500 text-white py-2 px-4 rounded-md mr-2"
+                className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md mr-2 transition-all duration-200"
               >
                 Delete
               </button>

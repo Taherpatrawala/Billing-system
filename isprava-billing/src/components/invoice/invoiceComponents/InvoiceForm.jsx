@@ -366,15 +366,16 @@ const InvoiceForm = () => {
           </div>
           <button
             onClick={handleSaveInvoice}
-            className="border m-2 p-2 bg-green-300 text-white"
+            className="p-2 m-2 border rounded-md bg-green-400 border-green-600 hover:bg-green-600 text-white transition-all duration-300 shadow-md"
             type="submit"
           >
             Save
           </button>
           <button
             onClick={handleEditInvoice}
-            className="border m-2 p-2 bg-purple-300 text-white"
+            className="p-2 m-2 border border-purple-600 rounded-md bg-purple-400 hover:bg-purple-600 text-white transition-all duration-300 shadow-md"
             type="submit"
+            style={{ borderWidth: "10px !important" }}
           >
             Update
           </button>

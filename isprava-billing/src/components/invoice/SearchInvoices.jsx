@@ -144,19 +144,19 @@ const SearchInvoices = () => {
           <div>
             <button
               onClick={() => handleClick(invoice._id)}
-              className="bg-blue-500 text-white py-2 px-4 rounded-md mr-2"
+              className="bg-blue-500 hover:bg-blue-800 text-white py-2 px-4 rounded-md mr-2 transition-all duration-200"
             >
               View
             </button>
             <button
               onClick={() => handleEdit(invoice._id)}
-              className="bg-yellow-500 text-white py-2 px-4 rounded-md"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md transition-all duration-200"
             >
               Edit
             </button>
             <button
               onClick={() => handleDeleteInvoice(invoice._id)}
-              className="bg-red-500 text-white py-2 px-4 rounded-md m-2"
+              className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md m-2 transition-all duration-200"
             >
               Delete
             </button>
